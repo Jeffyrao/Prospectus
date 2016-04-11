@@ -2,7 +2,7 @@
 
 To download the code:
 ```
-$ git clone xx
+$ git clone https://github.com/Jeffyrao/Prospectus.git
 $ cd Prospctus
 ```
 
