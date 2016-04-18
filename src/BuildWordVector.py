@@ -32,15 +32,6 @@ def writeNewWordRoots(dict):
     for word, index in sorted_dict:
         file.write(word+'\n')
     file.close()
-
-def loadHTMLFileList():
-    file = open('../html_file_list.txt', 'r')
-    html_list = {}
-    for line in file.readlines():
-        html_list[line.strip()] = True
-    file.close()
-    return html_list
-
 #### MAIN Function, Read From Here #######
 if __name__ == "__main__": 
     stemmer = WordNetLemmatizer()
@@ -49,6 +40,7 @@ if __name__ == "__main__":
     # remove duplicate word roots, and write the new dictionary into a file.
     writeNewWordRoots(dict)
     fileEmptyDict = {}
+    FirstTimeFlag = {}
     # fileWordCounts: a table to store the word count lists,
     # its format is like: (filename, sec_name) -> list of word frequencies
     fileWordCounts = {}
@@ -56,7 +48,9 @@ if __name__ == "__main__":
     for filename in os.listdir("../sec_files/"):
         splits =  filename.split('_')
         # splits[1] = file name, splits[0] = section name
-        fileWordCounts[splits[1]] = {}
+        if splits[1] not in FirstTimeFlag:
+            fileWordCounts[splits[1]] = {}
+            FirstTimeFlag[splits[1]] = False
         # initialize the word frequency list
         fileWordCounts[splits[1]][splits[0]] = [0]*len(dict.keys())
         file = open('../sec_files/'+filename, 'r')
